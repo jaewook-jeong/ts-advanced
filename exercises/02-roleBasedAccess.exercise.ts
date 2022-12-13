@@ -21,6 +21,7 @@ const userAccessModel = {
  * 🕵️‍♂️ Try removing and re-adding as const, and see what happens
  * to the inference.
  */
+/* 없으면 string[] 타입으로 보인다. */
 
 export type Role = keyof typeof userAccessModel;
 /**         ^ 🚁
@@ -31,6 +32,7 @@ export type Role = keyof typeof userAccessModel;
  */
 
 export type Action = typeof userAccessModel[Role][number];
+
 /**         ^ 🚁
  *
  * 🚁 Hover Action. This is... interesting. What's [number]
@@ -64,7 +66,9 @@ export const canUserAccess = (role: Role, action: Action) => {
  *
  * type Action = unknown;
  */
-
+type UserAccessModelValues = typeof userAccessModel[Role];
+type Action2 = UserAccessModelValues[0];
+// 0번째 변수들의 유니온 값이겠군
 /**
  * 💡 We can figure out the first couple of pieces of
  * typeof userAccessModel[Role][number].
@@ -97,6 +101,7 @@ export const canUserAccess = (role: Role, action: Action) => {
  * 🚁 Hover Action. Now, we're getting the FIRST member of each
  * of the arrays in the object.
  */
+type Action2 = UserAccessModelValues[number];
 
 /**
  * 💡 Now, we could do the same thing as we did in the apiMapping
