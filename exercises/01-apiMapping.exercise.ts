@@ -32,21 +32,21 @@ export type ProgramMap = typeof programModeEnumMap;
  * 🚁 Hover over ProgramMap - it should be exactly the same
  * display as when you hovered over programModeEnumMap
  */
-
+const aa: ProgramMap["GROUP"] = 'group';
 export type Program = ProgramMap[keyof ProgramMap];
 /**         ^ 🚁
  *
  * 🚁 Program is being inferred as a union type of all of
  * the frontend enums. Interesting.
  */
-
+const bb: Program = "selfDirected";
 //          ⬇️ 🚁
 export type IndividualProgram = ProgramMap[
   | "ONE_ON_ONE"
   | "SELF_DIRECTED"
   | "PLANNED_ONE_ON_ONE"
   | "PLANNED_SELF_DIRECTED"];
-
+const cc: IndividualProgram = 'selfDirected';
 /**
  * 🚁 IndividualProgram is all of the enums, EXCEPT for
  * the ones with the keys of GROUP and ANNOUNCEMENT
