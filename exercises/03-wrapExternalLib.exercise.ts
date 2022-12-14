@@ -410,7 +410,27 @@ const fetchPost = (id: string) => {
     body: "Great post",
   });
 };
+type WrapFunction<TFunc extends (...args: any) => any, TAdditional = {}> = () => Promise<Awaited<ReturnType<TFunc>> & TAdditional>;
+export const fetchUserWithFullName: WrapFunction<
+  typeof fetchUser,
+  { fullName: string }
+> = async (...args) => {
 
+}
+const fetchPostWithMeta: WrapFunction<
+  typeof fetchPost,
+  { meta: { title: string; description: string } }
+> = async (...args) => {
+  const post = await fetchPost(...args);
+
+  return {
+    ...post,
+    meta: {
+      title: post.title,
+      description: post.body,
+    },
+  };
+};
 /**
  * 🕵️‍♂️ Stretch goal 2: Given the function below, get a union
  * type of all of its parameters.
