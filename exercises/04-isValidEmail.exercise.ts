@@ -23,11 +23,12 @@ type ValidEmail = Opaque<string, "ValidEmail">;
  * 🕵️‍♂️ Try creating a new type, ValidAge, which creates an opaque
  * type from a number.
  *
- * type ValidAge = Opaque<number, "ValidAge">;
+ *
  *      ^ 🚁
  *
  * This should also be valid, and look similar to ValidEmail.
  */
+type ValidAge = Opaque<number, "ValidAge">;
 
 const isValidEmail = (email: string): email is ValidEmail => {
   //  ^ 🚁
@@ -94,9 +95,9 @@ export const onSubmit = async (values: { email: string }) => {
  * 🛠 Let's check if that's true. Create a new variable,
  * email, annotated as a ValidEmail.
  *
- * const email: ValidEmail = "team@totaltypescript.com";
+ *
  */
-
+const email: ValidEmail = "team@totaltypescript.com";
 /**
  * ⛔️ Error on email!
  *
@@ -116,7 +117,8 @@ export const onSubmit = async (values: { email: string }) => {
  * string is _close enough_ to ValidEmail that we can cast it
  * just fine.
  */
-
+const email = "team@totaltypescript.com" as ValidEmail;
+const email = 12 as ValidEmail;
 /**
  * 🕵️‍♂️ Try breaking it by changing "team@totaltypescript.com" to
  * a number:
@@ -284,3 +286,40 @@ export const onSubmit = async (values: { email: string }) => {
  *
  * Solution #1
  */
+
+/**
+ * #1 below:
+ */
+
+export type Opaque2<TValue, TOpaque> = TValue & {
+  __: TOpaque;
+};
+
+type PostId = Opaque2<string, "PostId">;
+type UserId = Opaque2<string, "UserId">;
+
+const getUserById = (id: UserId) => {};
+const getPostById = (id: PostId) => {};
+
+// Method 1 - assertion function
+
+function assertIsUserId(id: any): asserts id is UserId {}
+
+const id = "123";
+assertIsUserId(id);
+getUserById(id);
+
+// Method 2 - type predicate
+
+function isUserId(id: any): id is UserId {
+  return true;
+}
+
+const id2 = "123";
+if (isUserId(id2)) {
+  getUserById(id2);
+}
+
+// Method 3 - casting
+
+getUserById("123" as UserId);
