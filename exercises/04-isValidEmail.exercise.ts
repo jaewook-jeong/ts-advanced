@@ -5,6 +5,9 @@
  * a user if we haven't already checked that their email
  * is valid, using a pattern called 'opaque types'.
  */
+/**
+ Opaque 패턴을 사용하여 이메일이 유효한지 아직 확인하지 않은 경우 사용자를 만들 수 없도록 하는
+ * */
 
 /**
  * 🧑‍💻 This is the helper at the heart of the operation. It takes
@@ -22,13 +25,14 @@ type ValidEmail = Opaque<string, "ValidEmail">;
  *
  * 🕵️‍♂️ Try creating a new type, ValidAge, which creates an opaque
  * type from a number.
- *
+ **/
+type ValidAge = Opaque<number, "ValidAge">;
+ /**
  *
  *      ^ 🚁
  *
  * This should also be valid, and look similar to ValidEmail.
  */
-type ValidAge = Opaque<number, "ValidAge">;
 
 const isValidEmail = (email: string): email is ValidEmail => {
   //  ^ 🚁
@@ -41,8 +45,12 @@ const isValidEmail = (email: string): email is ValidEmail => {
  *
  * 🕵️‍♂️ Remove email is ValidEmail from the return type of isValidEmail:
  *
- * const isValidEmail = (email: string) => {
- *
+ **/
+  const isValidEmailTemp = (email: string) => {
+    return email.includes("@");
+  };
+
+/* *
  * ⛔️ A wild error appears!
  *
  * Type 'string' is not assignable to type 'ValidEmail'.
